@@ -1,0 +1,427 @@
+	<nav class="navbar" style="background-color: #99d6ff">
+     <a class="navbar-brand" href="#"> 
+     	<h2 style="color: #ffffff"><strong>Rates Summary</strong></h2></a>
+    </nav>
+
+	<div class="container-fluid">
+      <div class="row" ><!-- LHS RHS CONTAINER -->
+        <!-- L.H.S. -->
+        <div class="col-sm-5" style="background-color:#f2f2f2" id="LHS">
+          <div class="row" style=" margin: 30px">
+             <div class="col-sm-6">
+               <h5>BUYING RATES</h5>
+             </div> 
+             <div class="col-sm-6" >
+               <button type="button" class="btn btn-primary"
+                ng-click="copyAllLegs()">COPY ALL LEGS</button>
+             </div> 
+         </div> 
+
+        <!-- LEG LIST -->
+        <div ng-repeat="legData in legDataDetails">
+         <div class="row" style=" margin-top: 30px;" >
+             <div class="col-sm-6">
+               <h5>{{legData.rate_card_meta.leg_name}}</h5>
+             </div> 
+             <div class="col-sm-6" >
+               <h5>TOTAL: GHS {{legData.rate_card_obj.card_meta.total_cost | number: 0}}
+               </h5>
+             </div> 
+         </div> 
+         <table class="table" style="width:100%; background-color: white; ">
+         <thead>
+              <tr>
+                <th scope="col">Charges</th>
+                <th scope="col" >Final Amount</th>
+              </tr>
+         </thead >
+        </table>
+         <div style="width:100%;overflow:auto; max-height:300px;">
+           <table class="table" style="background-color: white" >
+	            <tbody >
+	              <tr ng-repeat="card in legData.rate_card_obj.card_charges">
+	                <td>{{card.charge_name}}</td>
+	                <td>{{card.total}}</td>
+	              </tr>
+	            </tbody>
+          </table>
+         </div>
+
+         <div class="row justify-content-end">
+ 			<div class="col-6 form-inline" style="float: right;">
+ 				<a href="#" ng-click="showLegOnRHS(legData)">
+ 					<h5>COPY</h5>
+ 				</a> &nbsp;&nbsp; <h5>OR</h5> &nbsp;
+	         	<input type="text" class="form-control " style="width: 100px" >
+	         	<button class="btn btn-primary">OK</button>
+ 			</div>        	
+         </div>
+        </div><!-- LEG LIST ends here-->
+          
+       </div><!-- L.H.S. ends here-->
+
+        <!-- R.H.S  -->
+        <div class="col-sm-7" style="background-color: #f4f7fc" id="RHS">
+          <div class="row" style=" margin: 30px">
+             <div class="col-sm-6">
+               <h5>YOUR SELLING RATES</h5>
+             </div> 
+             <div class="col-sm-3" >
+               <button type="button" class="btn btn-primary"
+               ng-click="showAddLegModal()">CREATE NEW LEG</button>
+             </div> 
+             <div class="col-sm-3" >
+               <button type="button" class="btn btn-primary"
+               ng-click="hideChargeDetails()">HIDE/SHOW CHARGE DETAILS</button>
+             </div> 
+         </div> 
+
+         	<!-- R.H.S. SELECTED LEG DETAIL -->
+         	<div ng-show="showLeg">
+	         <div class="row" style=" margin-top: 30px">
+	               <div class="col-sm-9">
+	                 <h5>{{rhsSelectedLedData.rate_card_meta.leg_name}}</h5>
+	               </div> 
+	               <div class="col-sm-3" >
+	                 <h5 style="float: center;">TOTAL: GHS    {{rhsSelectedLedData.rate_card_obj.card_meta.total_cost | number: 0}}
+	                 </h5>
+	               </div> 
+	         </div>
+
+	         <div ng-show="showChargeDetails">  <!-- show charge detailds --> 
+		        <table class="table" style="width:100%; background-color: white; ">
+		         <thead>
+		              <tr>
+		                <th scope="col">Charge</th>
+		                <th scope="col" >Basis</th>
+		                <th scope="col">Amount</th>
+		                <th scope="col" >Final Amount</th>
+		              </tr>
+		         </thead >
+		        </table>
+	        
+	         <div style="width:100%;overflow:auto; max-height:300px;">
+	           <table class="table" style="background-color: white" >
+		            <tbody >
+		              <tr ng-repeat="card in rhsSelectedLedData.rate_card_obj.card_charges 
+		              ">
+		                <td>{{card.charge_name}}</td>
+		                <td>{{card.basis}}</td>
+		                <td>{{card.charge_currency}} {{card.amount}}</td>
+		                <td>{{rhsSelectedLedData.rate_card_obj.card_meta.currency}}
+		                 {{card.total}}</td>
+		                <td><i class="material-icons"
+		                	ng-click="editCharge(card.charge_name)">create</i></td>
+		                <td><i class="material-icons"
+		                	ng-click="removeCharge(card.charge_name)">delete</i></td>
+		              </tr>
+		            </tbody>
+	          </table>
+	         </div>
+
+
+             <div class="row" style=" margin: 30px">
+                   <div class="col-sm-7">
+                   </div> 
+                   <div class="col-sm-2" >
+                      <a href="#" ng-click="removeLeg()"><h5>REMOVE LEG</h5></a> <br/>
+                   </div> 
+                   <div class="col-sm-3" >
+                      <a href="#" ng-click="showAddChargeModal()"><h5>ADD ANOTHER CHARGE</h5></a>
+                   </div> 
+             </div> 
+           </div><!-- show charge detailds ends here -->  
+           </div><!-- R.H.S. SELECTED LEG DETAIL ends here-->
+
+
+
+            <!-- R.H.S. All LEGS -->
+	        <div ng-repeat="legData in legDataDetails" ng-show="showAllLegs" 
+	           >
+	         <div class="row" style=" margin-top: 30px;" >
+	             <div class="col-sm-6">
+	               <h5>{{legData.rate_card_meta.leg_name}}</h5>
+	             </div> 
+	             <div class="col-sm-6" >
+	               <h5>TOTAL: GHS {{legData.rate_card_obj.card_meta.total_cost | number: 0}}
+	               </h5>
+	             </div> 
+	         </div> 
+
+
+	         <div ng-show="showChargeDetails"> 
+	         <table class="table" style="width:100%; background-color: white; ">
+	         <thead>
+	              <tr>
+	                <th scope="col">Charges</th>
+	                <th scope="col" >Basis</th>
+	                <th scope="col">Amount</th>
+	                <th scope="col" >Final Amount</th>
+	              </tr>
+	         </thead >
+	        </table>
+	         <div style="width:100%;overflow:auto; max-height:300px; 
+	            margin-bottom: 60px">
+	           <table class="table" style="background-color: white" >
+		            <tbody >
+		              <tr ng-repeat="card in legData.rate_card_obj.card_charges">
+		                <td>{{card.charge_name}}</td>
+		                <td>{{card.basis}}</td>
+		                <td>{{card.charge_currency}} {{card.amount}}</td>
+		                <td>{{legData.rate_card_obj.card_meta.currency}}
+		                  {{card.total}}</td>
+		                <td><i class="material-icons">create</i></td>
+		                <td><i class="material-icons"
+		                  >delete</i></td>
+		              </tr>
+		            </tbody>
+	          </table>
+	         </div>
+	         </div>
+	        </div><!-- R.H.S. All LEGS ends here-->
+
+          </div><!-- R.H.S  ends here-->
+      </div><!-- LHS RHS CONTAINER -->
+
+      <!-- FOOTER -->
+      <div class="row" 
+      style="background-color: #ffffff; height: 80px; margin-top: 10px;"><!-- Footer Row -->
+	     	<div class="col-4" style="padding: 10px">
+	     		<h5>TOTAL BUY RATE</h5> 
+	     		<p><h5>GHS {{totaBuyRate}}</h5></p>
+	     	</div>
+	     	<div class="col-4" style="padding: 10px" >
+	     		<h5>TOTAL BREAK-UP RATE</h5> 
+	     		<p><h5>GHS {{sellingRates}}</h5></p>
+	     	</div>
+	     	<div class="col-4" style="padding: 10px">
+	     		<h5>PROFITE PERCENTAGE</h5> 
+	     		<p><h5>-{{totalBreakupRate}}%</h5></p>
+	     	</div>
+        </div><!-- Footer Row ends here-->
+
+    </div>
+
+
+
+
+           <!-- CAHRGE EDIT MODAL -->
+
+		   <div class="modal fade" id="chargeEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Edit Charge</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Global Charge Id</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="chargeEdit[0].global_charge_id" readonly>
+			          </div>	
+			           <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Leg Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="chargeEdit[0].leg_name" readonly>
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Charge Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="chargeEdit[0].charge_name">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Charge Currency</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="chargeEdit[0].charge_currency">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Basis</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="chargeEdit[0].basis">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Container Type</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="chargeEdit[0].container_type">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Amount</label>
+			            <input type="text" class="form-control"
+			             id="recipient-name" ng-model="chargeEdit[0].amount">
+			          </div>
+			          
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="saveEdit()">SAVE CHANGES</button>
+			        <button type="button" class="btn btn-primary" 
+			        data-dismiss="modal">CANCEL</button>
+			      </div>
+			    </div>
+			  </div>
+			</div><!--CHARGE EDIT MODAL ends here-->
+
+			<!--ADD NEW CHARGE MODAL -->
+			<div class="modal fade" id="newChargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">ADD NEW CHARGE</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			          	
+			           <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Leg Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="rhsSelectedLedData.rate_card_meta.leg_name" readonly>
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Charge Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newCharge.charge_name" >
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Basis</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newCharge.basis">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Charge Currency</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newCharge.charge_currency">
+			          </div>
+			          
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Container Type</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newCharge.container_type">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Amount</label>
+			            <input type="number" class="form-control"
+			             id="recipient-name" ng-model="newCharge.amount">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Quantity</label>
+			            <input type="number" class="form-control" id="recipient-name"
+			            ng-model="newCharge.quantity" >
+			          </div>
+			          
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="saveNewCharge()">SAVE CHARGE</button>
+			        <button type="button" class="btn btn-primary" 
+			        data-dismiss="modal" ng-click="hideAddChargeModal()">CANCEL</button>
+			      </div>
+			    </div>
+			  </div>
+			</div><!-- ADD NEW CHARGE MODAL ends here-->
+
+			<!--ADD NEW LEG MODAL -->
+			<div class="modal fade" id="legModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">ADD LEG</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			           <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Leg Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newLeg.leg_name" >
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Curreny</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newLeg.currency" >
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Total Cost</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newLeg.total_cost" >
+			          </div>
+			          
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="saveNewLeg()">SAVE LEG</button>
+			        <button type="button" class="btn btn-primary" 
+			        data-dismiss="modal" ng-click="hideAddLegModal()">CANCEL</button>
+			      </div>
+			    </div>
+			  </div>
+			</div><!-- ADD NEW LEG MODAL ends here-->
+
+
+			<!--ADD FIRST CHARGE TO LEG MODAL (add first charge to newly created leg)-->
+			<div class="modal fade" id="firstChargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">ADD FIRST CHARGE</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			           <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Leg Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="newLegData.leg_name" readonly>
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Charge Name</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="firstCharge.charge_name" >
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Basis</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="firstCharge.basis">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Charge Currency</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="firstCharge.charge_currency">
+			          </div>
+			          
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Container Type</label>
+			            <input type="text" class="form-control" id="recipient-name"
+			            ng-model="firstCharge.container_type">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Amount</label>
+			            <input type="number" class="form-control"
+			             id="recipient-name" ng-model="firstCharge.amount">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="col-form-label">Quantity</label>
+			            <input type="number" class="form-control" id="recipient-name"
+			            ng-model="firstCharge.quantity" >
+			          </div>
+			          
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="saveFirstCharge()">SAVE CHARGE</button>
+			        <button type="button" class="btn btn-primary" 
+			        data-dismiss="modal" ng-click="hideFirstChargeModal()">CANCEL</button>
+			      </div>
+			    </div>
+			  </div>
+			</div><!-- ADD FIRST CHARGE TO LEG MODAL ends here-->

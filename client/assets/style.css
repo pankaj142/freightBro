@@ -1,0 +1,11 @@
+
+.tableHead{
+	width:100%;
+	background-color: white; 
+}
+.tableBody {
+  width:100%;
+  overflow:auto;
+  max-height:300px;
+  background-color: white;
+}
