@@ -1,0 +1,75 @@
+<!--ADD NEW CHARGE MODAL -->
+<div class="modal fade" id="newChargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ADD NEW CHARGE</h5>
+        <button ng-click="hideAddChargeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form name="newChargeForm" novalidate>
+           <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Leg Name</label>
+            <input name="legName" type="text" class="form-control" id="recipient-name"
+            ng-model="rhsSelectedLedData.rate_card_meta.leg_name" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Charge Name</label>
+            <input name="chargeName" type="text" class="form-control" id="recipient-name"
+            ng-model="newCharge.charge_name" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Basis</label>
+            <input name="basis" type="text" class="form-control" id="recipient-name"
+            ng-model="newCharge.basis" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Charge Currency</label>
+            <input name="chargeCurrency" type="text" class="form-control" id="recipient-name"
+            ng-model="newCharge.charge_currency" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Container Type</label>
+            <input name="containerType" type="text" class="form-control" id="recipient-name"
+            ng-model="newCharge.container_type" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Amount</label>
+            <input name="amount" type="number" class="form-control"
+             id="recipient-name" ng-model="newCharge.amount" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Quantity</label>
+            <input name="quantity" type="number" class="form-control" id="recipient-name"
+            ng-model="newCharge.quantity" required >
+          </div>
+          <span ng-show="newChargeForm.chargeName.$invalid ||
+	                      newChargeForm.basis.$invalid ||
+	                      newChargeForm.chargeCurrency.$invalid ||
+	                      newChargeForm.containerType.$invalid ||
+	                      newChargeForm.amount.$invalid ||
+	                      newChargeForm.quantity.$invalid">
+	                      <h5 style="color: red">Fill all the fields.</h5>
+	      </span>
+          <div class="form-group">
+	        <button
+	         ng-disabled="newChargeForm.chargeName.$invalid ||
+	                      newChargeForm.basis.$invalid ||
+	                      newChargeForm.chargeCurrency.$invalid ||
+	                      newChargeForm.containerType.$invalid ||
+	                      newChargeForm.amount.$invalid ||
+	                      newChargeForm.quantity.$invalid"
+	           type="submit" class=" btn btn-secondary" data-dismiss="modal" ng-click="saveNewCharge()" >SAVE CHARGE</button>
+	        <button type="button" class=" btn btn-primary" 
+	        data-dismiss="modal" ng-click="hideAddChargeModal()">CANCEL</button>
+   		  </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div><!-- ADD NEW CHARGE MODAL ends here-->

@@ -1,0 +1,71 @@
+ <!-- CAHRGE EDIT MODAL -->
+<div class="modal fade" id="chargeEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Charge</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="chargeEditForm" novalidate>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Global Charge Id</label>
+            <input name="globleChargeId" type="text" class="form-control" id="recipient-name"
+            ng-model="chargeEdit[0].global_charge_id" readonly>
+          </div>	
+           <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Leg Name</label>
+            <input name="legName" type="text" class="form-control" id="recipient-name"
+            ng-model="chargeEdit[0].leg_name" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Charge Name</label>
+            <input name="chargeName" type="text" class="form-control" id="recipient-name"
+            ng-model="chargeEdit[0].charge_name" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Charge Currency</label>
+            <input name="chargeCurrency" type="text" class="form-control" id="recipient-name"
+            ng-model="chargeEdit[0].charge_currency" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Basis</label>
+            <input name="basis" type="text" class="form-control" id="recipient-name"
+            ng-model="chargeEdit[0].basis" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Container Type</label>
+            <input name="containerType" type="text" class="form-control" id="recipient-name"
+            ng-model="chargeEdit[0].container_type" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Amount</label>
+            <input name="amount" type="text" class="form-control"
+             id="recipient-name" ng-model="chargeEdit[0].amount" required>
+          </div>
+          <span ng-show="chargeEditForm.chargeName.$invalid ||
+                         chargeEditForm.chargeCurrency.$invalid ||
+                         chargeEditForm.basis.$invalid ||
+                         chargeEditForm.containerType.$invalid ||
+                         chargeEditForm.amount.$invalid "> 
+                   <h5 style="color: red">Fill all fields.</h5> </span>
+          <div class="form-group">          
+	          <button type="submit"
+	            ng-disabled="chargeEditForm.chargeName.$invalid ||
+	                         chargeEditForm.chargeCurrency.$invalid ||
+	                         chargeEditForm.basis.$invalid ||
+	                         chargeEditForm.containerType.$invalid ||
+	                         chargeEditForm.amount.$invalid "
+	              class="btn btn-secondary" 
+	              ng-click="saveEdit()">SAVE CHANGES</button>
+	        <button type="button" class="btn btn-primary" 
+	        data-dismiss="modal">CANCEL</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div><!--CHARGE EDIT MODAL ends here-->

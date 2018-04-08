@@ -1,0 +1,125 @@
+<!--ADD NEW LEG MODAL -->
+<div class="modal fade" id="legModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ADD LEG</h5>
+        <button ng-click="hideAddLegModal()"
+         type="button" class="close"  aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="addLegForm" novalidate>
+           <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Leg Name</label>
+            <input name="legName" type="text" class="form-control" id="recipient-name"
+            ng-model="newLeg.leg_name" required >
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Curreny</label>
+            <input name="currency" type="text" class="form-control" id="recipient-name"
+            ng-model="newLeg.currency" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Total Cost</label>
+            <input name="totalCost" type="text" class="form-control" id="recipient-name"
+            ng-model="newLeg.total_cost" required>
+          </div>
+          <span ng-show=" addLegForm.legName.$invalid ||
+          	              addLegForm.currency.$invalid ||
+          	              addLegForm.totalCost.$invalid ">
+          	<h5 style="color: red">Fill all fields.</h5>
+          </span>
+          <div class="form-group">
+          	<button  type="submit"
+          	 ng-disabled="addLegForm.legName.$invalid ||
+          	              addLegForm.currency.$invalid ||
+          	              addLegForm.totalCost.$invalid "
+          	 class="btn btn-secondary"
+          	  ng-click="saveNewLeg()">SAVE LEG</button>
+	        <button type="button" class="btn btn-primary" 
+	        data-dismiss="modal" ng-click="hideAddLegModal()">CANCEL</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div><!-- ADD NEW LEG MODAL ends here-->
+
+
+<!--ADD FIRST CHARGE TO LEG MODAL (add first charge to newly created leg)-->
+<div class="modal fade" id="firstChargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ADD FIRST CHARGE</h5>
+        <button ng-click="hideFirstChargeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="addFirstChargeForm" novalidate>
+           <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Leg Name</label>
+            <input name="legName" type="text" class="form-control" id="recipient-name"
+            ng-model="newLegData.leg_name" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Charge Name</label>
+            <input name="chargeName" type="text" class="form-control" id="recipient-name"
+            ng-model="firstCharge.charge_name" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Basis</label>
+            <input name="basis" type="text" class="form-control" id="recipient-name"
+            ng-model="firstCharge.basis" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Charge Currency</label>
+            <input name="chargeCurrency" type="text" class="form-control" id="recipient-name"
+            ng-model="firstCharge.charge_currency" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Container Type</label>
+            <input name="containerType" type="text" class="form-control" id="recipient-name"
+            ng-model="firstCharge.container_type" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Amount</label>
+            <input name="amount" type="number" class="form-control"
+             id="recipient-name" ng-model="firstCharge.amount" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Quantity</label>
+            <input name="quantity" type="number" class="form-control" id="recipient-name"
+            ng-model="firstCharge.quantity" required >
+          </div>
+          <span ng-show="addFirstChargeForm.chargeName.$invalid ||
+          	              addFirstChargeForm.basis.$invalid ||
+          	              addFirstChargeForm.chargeCurrency.$invalid ||
+          	              addFirstChargeForm.containerType.$invalid ||
+          	              addFirstChargeForm.amount.$invalid ||
+          	              addFirstChargeForm.quantity.$invalid">
+          	<h5 style="color: red">Fill all fields.</h5></span>
+          <div class="form-group">
+          	<button
+          	 ng-disabled="addFirstChargeForm.chargeName.$invalid ||
+          	              addFirstChargeForm.basis.$invalid ||
+          	              addFirstChargeForm.chargeCurrency.$invalid ||
+          	              addFirstChargeForm.containerType.$invalid ||
+          	              addFirstChargeForm.amount.$invalid ||
+          	              addFirstChargeForm.quantity.$invalid " 
+          	 type="submit" class="btn btn-secondary" data-dismiss="modal" ng-click="saveFirstCharge()">SAVE CHARGE</button>
+
+	        <button type="button" class="btn btn-primary" 
+	        data-dismiss="modal" ng-click="hideFirstChargeModal()">CANCEL</button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div><!-- ADD FIRST CHARGE TO LEG MODAL ends here-->
