@@ -19,7 +19,7 @@ Admin Panel for maintaining the rate summary using grid.
 
 # See App
 
-Heroku Link: NA
+Heroku Link: https://rate-summary-grid.herokuapp.com/
 
 # To start the app follow the commands on command prompt:
 
